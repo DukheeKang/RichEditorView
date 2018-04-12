@@ -260,10 +260,9 @@ RE.insertLink = function(url, title) {
             el.setAttribute("href", url);
             el.setAttribute("title", title);
 
-            var range = sel.getRangeAt(0).cloneRange();
-            range.surroundContents(el);
-            sel.removeAllRanges();
-            sel.addRange(range);
+            var range = sel.getRangeAt(0);
+            el.appendChild(range.extractContents());
+            range.insertNode(el);
         }
     }
     RE.callback("input");
