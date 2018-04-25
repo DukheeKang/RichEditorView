@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- "use strict";
+"use strict";
 
 var RE = {};
 
 window.onload = function() {
     RE.callback("ready");
+    RE.setBaseTextColor("#000000")
 };
 
 RE.editor = document.getElementById('editor');
@@ -404,6 +405,13 @@ RE.getRelativeCaretYPosition = function() {
         // && range.startContainer.nodeName.toLowerCase() == 'div');
         if (needsWorkAround) {
             y = range.startContainer.offsetTop - window.pageYOffset;
+            
+            if (isNaN(y)){
+                var rects=range.getClientRects();
+                if (rects.length > 0) {
+                    y = rects[0].top;
+                }
+            }
         } else {
             if (range.getClientRects) {
                 var rects=range.getClientRects();
